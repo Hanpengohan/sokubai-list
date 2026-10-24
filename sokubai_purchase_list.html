@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f5f1">
+<title>即売会リスト</title>
+<style>
+:root{--bg:#f7f5f1;--paper:#fff;--ink:#242522;--muted:#77786f;--line:#e8e5dd;--accent:#425f50;--accent-light:#e8eee9;--orange:#b7653c;--danger:#a7443d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;padding:env(safe-area-inset-top) 0 calc(22px + env(safe-area-inset-bottom));}
+main{max-width:680px;margin:0 auto;padding:20px 16px 36px}.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--accent);font-weight:800}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:5px 0 18px}h1{font-size:29px;line-height:1.2;margin:5px 0 7px;letter-spacing:-.04em}.sub{font-size:13px;color:var(--muted);margin:0}.event-tag{font-size:11px;white-space:nowrap;background:var(--accent-light);color:var(--accent);padding:7px 10px;border-radius:99px;font-weight:700;margin-top:8px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:15px}.stat.wide{grid-column:1/-1}.stat-label{font-size:12px;color:var(--muted)}.stat-value{font-size:23px;font-weight:800;letter-spacing:-.04em;margin-top:4px}.stat-value small{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0}.budget-line{display:flex;justify-content:space-between;align-items:center;gap:12px}.budget-edit{display:flex;align-items:center;gap:5px}.budget-edit input{width:110px;border:1px solid var(--line);border-radius:9px;padding:8px;font-size:15px;text-align:right;background:#fff;color:var(--ink)}.progress{height:6px;background:#eeece5;border-radius:9px;overflow:hidden;margin-top:11px}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 11px}.section-head h2{font-size:16px;margin:0}.count{font-size:12px;color:var(--muted)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:15px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:700;color:var(--muted)}input,select,textarea{font:inherit} .field input,.field select{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;padding:11px 10px;background:#fff;color:var(--ink);font-size:14px;outline-color:var(--accent)}.primary{width:100%;border:0;border-radius:11px;background:var(--accent);color:#fff;font-size:14px;font-weight:750;padding:13px;margin-top:12px;cursor:pointer}.secondary{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;color:var(--ink);font-size:12px;cursor:pointer}.toolbar{display:flex;gap:8px;align-items:center}.toolbar select{max-width:150px;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff;font-size:12px;color:var(--ink)}.list{display:flex;flex-direction:column;gap:9px}.item{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:start;padding:13px;background:var(--paper);border:1px solid var(--line);border-radius:14px}.check{appearance:none;width:23px;height:23px;border:1.5px solid #c9c9bf;border-radius:7px;margin:2px 0 0;display:grid;place-items:center;cursor:pointer}.check:checked{background:var(--accent);border-color:var(--accent)}.check:checked:after{content:"✓";color:#fff;font-size:15px;font-weight:800}.item-main{min-width:0}.item-title{font-size:15px;font-weight:800;line-height:1.4;overflow-wrap:anywhere}.item.purchased .item-title{text-decoration:line-through;color:#8c8d85}.item-meta{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5;overflow-wrap:anywhere}.place{display:inline-block;background:#f0eee8;border-radius:5px;padding:2px 6px;color:#56584f;font-weight:700;margin-right:5px}.item-price{text-align:right;white-space:nowrap;font-size:14px;font-weight:800}.item-price small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}.item-actions{display:flex;gap:5px;justify-content:flex-end;margin-top:8px}.tiny{border:0;background:transparent;color:var(--muted);font-size:11px;padding:3px;cursor:pointer}.tiny.delete{color:var(--danger)}.empty{text-align:center;padding:28px 12px;color:var(--muted);font-size:13px;background:rgba(255,255,255,.55);border:1px dashed #d9d6cc;border-radius:14px}.empty strong{display:block;color:var(--ink);font-size:15px;margin-bottom:6px}.footer{font-size:11px;color:var(--muted);line-height:1.7;margin:18px 3px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#242522;color:white;padding:10px 15px;border-radius:99px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}.hidden{display:none!important}
+@media(min-width:560px){main{padding-top:30px}.stats{grid-template-columns:repeat(3,1fr)}.stat.wide{grid-column:auto}.fields{grid-template-columns:repeat(4,1fr)}.field.full{grid-column:span 2}}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">EVENT DAY COMPANION</div>
+  <div class="top"><div><h1>即売会リスト</h1><p class="sub">買い忘れを減らして、イベントを楽しもう。</p></div><span class="event-tag">同人誌・グッズ</span></div>
+
+  <section class="stats" aria-label="購入状況">
+    <div class="stat"><div class="stat-label">購入予定額</div><div class="stat-value" id="planned">¥0</div></div>
+    <div class="stat"><div class="stat-label">購入済み金額</div><div class="stat-value" id="spent">¥0</div></div>
+    <div class="stat wide">
+      <div class="budget-line"><div><div class="stat-label">予算</div><div class="stat-value" id="remaining">¥0 <small>残り</small></div></div><div class="budget-edit"><span class="stat-label">¥</span><input id="budget" type="number" min="0" step="500" value="10000" aria-label="予算"></div></div>
+      <div class="progress"><span id="progress"></span></div>
+      <div class="stat-label" id="budgetNote" style="margin-top:7px">予算を設定できます</div>
+    </div>
+  </section>
+
+  <div class="section-head"><h2 id="formHeading">＋ リストに追加</h2><span class="count">手入力</span></div>
+  <form class="panel" id="itemForm">
+    <div class="fields">
+      <div class="field full"><label for="circle">サークル・作家名 *</label><input id="circle" required maxlength="100" placeholder="例：サンプルサークル"></div>
+      <div class="field full"><label for="title">本・グッズ名 *</label><input id="title" required maxlength="120" placeholder="例：新刊『タイトル』"></div>
+      <div class="field"><label for="place">配置番号</label><input id="place" maxlength="30" placeholder="例：東A-12a"></div>
+      <div class="field"><label for="price">単価（円）</label><input id="price" type="number" min="0" step="1" value="500" inputmode="numeric"></div>
+      <div class="field"><label for="qty">購入数</label><input id="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+      <div class="field"><label for="note">メモ</label><input id="note" maxlength="160" placeholder="限定・差し入れなど"></div>
+    </div>
+    <button class="primary" id="saveBtn" type="submit">リストに追加</button>
+    <button class="secondary hidden" id="cancelEdit" type="button" style="width:100%;margin-top:8px">編集をキャンセル</button>
+  </form>
+
+  <div class="section-head"><h2>購入リスト <span id="itemCount" class="count">0件</span></h2>
+    <div class="toolbar"><select id="filter" aria-label="表示する商品"><option value="all">すべて</option><option value="todo">未購入のみ</option><option value="done">購入済みのみ</option></select><select id="sort" aria-label="並び順"><option value="place">配置番号順</option><option value="added">追加した順</option><option value="price">金額が高い順</option><option value="todo">未購入を先に</option></select></div>
+  </div>
+  <div id="list" class="list"></div>
+  <p class="footer">データはこのブラウザ内に保存されます。ブラウザのデータ消去や端末変更に備えて、必要に応じてバックアップを取ってください。</p>
+  <div style="display:flex;gap:8px"><button class="secondary" id="exportBtn" style="flex:1">リストを書き出す（CSV）</button><button class="secondary" id="clearBtn">全件削除</button></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(()=>{
+const KEY='event-purchase-list-v1';
+let items=[];let editingId=null;
+const $=id=>document.getElementById(id);
+const yen=n=>'¥'+Number(n||0).toLocaleString('ja-JP');
+const safe=(v)=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function load(){try{const raw=localStorage.getItem(KEY);if(raw){const d=JSON.parse(raw);items=Array.isArray(d.items)?d.items:[];$('budget').value=d.budget??10000;}}catch(e){items=[];}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({items,budget:Number($('budget').value)||0}));}catch(e){toast('保存できませんでした');}}
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1700);}
+function totals(){const planned=items.reduce((s,x)=>s+x.price*x.qty,0),spent=items.filter(x=>x.done).reduce((s,x)=>s+x.price*x.qty,0),budget=Math.max(0,Number($('budget').value)||0),remaining=budget-spent;$('planned').textContent=yen(planned);$('spent').textContent=yen(spent);$('remaining').innerHTML=yen(remaining)+' <small>'+(remaining<0?'予算超過':'残り')+'</small>';$('progress').style.width=(budget?Math.min(100,spent/budget*100):0)+'%';$('budgetNote').textContent=budget?(spent>budget?'予算を'+yen(spent-budget)+'超過しています':'予算の'+Math.round(spent/budget*100)+'%を使用（購入済み基準）'):'予算を入力してください';$('itemCount').textContent=items.length+'件';}
+function placeKey(s){return String(s||'').toUpperCase().replace(/([A-Z])(\d)/g,'$1 $2').replace(/(\d+)([A-Z])/g,'$1 $2');}
+function render(){totals();let arr=[...items];const filter=$('filter').value,sort=$('sort').value;if(filter==='todo')arr=arr.filter(x=>!x.done);if(filter==='done')arr=arr.filter(x=>x.done);arr.sort((a,b)=>{if(sort==='place')return placeKey(a.place).localeCompare(placeKey(b.place),'ja',{numeric:true})||a.created-b.created;if(sort==='price')return b.price*b.qty-a.price*a.qty;if(sort==='todo')return Number(a.done)-Number(b.done)||a.created-b.created;return a.created-b.created;});
+if(!arr.length){$('list').innerHTML='<div class="empty"><strong>'+(items.length?'該当する商品がありません':'購入リストはまだ空です')+'</strong>'+(items.length?'表示条件を変更してみてください':'上のフォームからサークルや商品を追加しよう。')+'</div>';return;}
+$('list').innerHTML=arr.map(x=>`<article class="item ${x.done?'purchased':''}">
+<input class="check" type="checkbox" aria-label="${x.done?'未購入に戻す':'購入済みにする'}：${safe(x.title)}" data-check="${x.id}" ${x.done?'checked':''}>
+<div class="item-main"><div class="item-title">${safe(x.title)}</div><div class="item-meta">${safe(x.circle)}<br>${x.place?'<span class="place">'+safe(x.place)+'</span>':''}${x.note?'<span>'+safe(x.note)+'</span>':''}</div><div class="item-actions"><button class="tiny" data-edit="${x.id}">編集</button><button class="tiny delete" data-delete="${x.id}">削除</button></div></div>
+<div class="item-price">${yen(x.price*x.qty)}<small>${yen(x.price)} × ${x.qty}</small></div></article>`).join('');
+}
+function resetForm(){$('itemForm').reset();$('price').value=500;$('qty').value=1;editingId=null;$('formHeading').textContent='＋ リストに追加';$('saveBtn').textContent='リストに追加';$('cancelEdit').classList.add('hidden');}
+$('itemForm').addEventListener('submit',e=>{e.preventDefault();const data={circle:$('circle').value.trim(),title:$('title').value.trim(),place:$('place').value.trim(),price:Math.max(0,Number($('price').value)||0),qty:Math.max(1,Math.floor(Number($('qty').value)||1)),note:$('note').value.trim()};if(!data.circle||!data.title)return;if(editingId){const i=items.findIndex(x=>x.id===editingId);if(i>=0)items[i]={...items[i],...data};toast('内容を更新しました');}else{items.push({...data,id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),done:false,created:Date.now()});toast('リストに追加しました');}persist();resetForm();render();});
+$('list').addEventListener('change',e=>{const id=e.target.dataset.check;if(!id)return;const x=items.find(x=>x.id===id);if(x){x.done=e.target.checked;persist();render();}});
+$('list').addEventListener('click',e=>{const edit=e.target.dataset.edit,del=e.target.dataset.delete;if(edit){const x=items.find(x=>x.id===edit);if(!x)return;editingId=x.id;for(const k of ['circle','title','place','price','qty','note'])$(k).value=x[k]??'';$('formHeading').textContent='商品を編集';$('saveBtn').textContent='変更を保存';$('cancelEdit').classList.remove('hidden');$('itemForm').scrollIntoView({behavior:'smooth',block:'start'});}if(del){const x=items.find(x=>x.id===del);if(x&&confirm('「'+x.title+'」を削除しますか？')){items=items.filter(x=>x.id!==del);if(editingId===del)resetForm();persist();render();toast('削除しました');}}});
+$('cancelEdit').addEventListener('click',resetForm);
+$('budget').addEventListener('input',()=>{persist();totals();});
+$('filter').addEventListener('change',render);$('sort').addEventListener('change',render);
+$('exportBtn').addEventListener('click',()=>{if(!items.length){toast('書き出す商品がありません');return;}const rows=[['購入済み','サークル・作家','商品名','配置番号','単価','購入数','小計','メモ'],...items.map(x=>[x.done?'購入済み':'未購入',x.circle,x.title,x.place,x.price,x.qty,x.price*x.qty,x.note])];const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='即売会購入リスト.csv';a.click();URL.revokeObjectURL(url);toast('CSVを書き出しました');});
+$('clearBtn').addEventListener('click',()=>{if(items.length&&confirm('購入リストをすべて削除します。この操作は取り消せません。よろしいですか？')){items=[];resetForm();persist();render();toast('リストを削除しました');}});
+load();render();
+})();
+</script>
+</body>
+</html>
